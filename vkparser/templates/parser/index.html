@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}VK Api Search{% endblock %}
+
+{% block content %}
+<main>
+    <section class="section-parse pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="parse-method bg-light rounded-3 p-3">
+                        <h2 class="mb-4"><a href="https://dev.vk.com/method/newsfeed.search" class="text-reset" target="_blank">newsfeed.search</a></h2>
+                        <form action="{% url 'request_result' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_name" value="news_form">
+                            {% for field in news_form.visible_fields %}
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="{{field.auto_id}}" class="form-label text-lowercase">{{field.label}}</label>
+                                    </div>
+                                    <div class="col-md-8">{{field}}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary w-100">Выполнить</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="parse-method bg-light rounded-3 p-3">
+                        <h2 class="mb-4"><a href="https://dev.vk.com/method/photos.search" class="text-reset" target="_blank">photos.search</a></h2>
+                        <form action="{% url 'request_result' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_name" value="photos_form">
+                            {% for field in photos_form.visible_fields %}
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="{{field.auto_id}}" class="form-label text-lowercase">{{field.label}}</label>
+                                    </div>
+                                    <div class="col-md-8">{{field}}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary w-100">Выполнить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
