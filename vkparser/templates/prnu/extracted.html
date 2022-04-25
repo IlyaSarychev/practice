@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}PRNU extracted{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-baseline">
+                    <h1 class="m-0">Запись {{id}}</h1>
+                    <p class="ms-3 m-0">(Результаты сохранены в базе данных)</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            {% for url, fingerprint in images %}
+                <div class="col-md-6 mb-3">
+                    <img src="{{url}}" class="w-100" alt="">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h2>Fingerprint (NDArray):</h2>
+                    <p>
+                        {{fingerprint}}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

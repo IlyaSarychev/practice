@@ -35,3 +35,26 @@ def retrieve_all_data():
 def delete_item(collection, id):
     collection = db[collection]
     return collection.delete_one({'id': id})
+
+
+def retrieve_image_urls(collection_name, id):
+    collection = db[collection_name]
+    item = collection.find_one({'id': id})
+
+    image_urls = []
+
+    if collection_name == 'news':
+        for attachment in item['attachments']:
+            if attachment['type'] == 'photo':
+                image_urls.append(attachment['photo']['sizes'][-1]['url'])
+
+    if collection_name == 'photos':
+        image_urls.append(item['sizes'][-1]['url'])
+
+    return image_urls
+
+
+def save_fingerprints(collection_name, id, data):
+    collection = db[collection_name]
+    data = list(map(lambda item: (item[0], str(item[1])), data))
+    return collection.update_one({'id': id}, {'$set': {'fingerprint': data}})

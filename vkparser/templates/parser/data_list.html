@@ -21,6 +21,7 @@
                         <div id="flush-collapse-news-{{forloop.counter}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample2">
                             <div class="accordion-body">
                                 <code style="display: block; white-space: pre-wrap;">{{json}}</code>
+                                <a href="{% url 'extract_prnu' collection id %}" class="mt-2 btn btn-primary w-100">Извлечь PRNU</a>
                                 <a href="{% url 'delete' collection id %}" class="mt-2 btn btn-danger w-100">Удалить</a>
                             </div>
                         </div>
@@ -46,6 +47,7 @@
                         <div id="flush-collapse-photos-{{forloop.counter}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample2">
                             <div class="accordion-body">
                                 <code style="display: block; white-space: pre-wrap;">{{json}}</code>
+                                <a href="{% url 'extract_prnu' collection id %}" class="mt-2 btn btn-primary w-100">Извлечь PRNU</a>
                                 <a href="{% url 'delete' collection id %}" class="mt-2 btn btn-danger w-100">Удалить</a>
                             </div>
                         </div>

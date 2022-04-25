@@ -1,8 +1,10 @@
 from django.views.generic.base import TemplateView
 from django.views.decorators.http import require_POST
 from django.shortcuts import redirect
+
 from .forms import NewsfeedSearchForm, PhotosSearchForm
 from .services import requests, database
+from prnu_service import get_fingerprint_from_images
 
 
 class IndexView(TemplateView):
@@ -54,3 +56,25 @@ def delete_item_view(request, collection, id):
     database.delete_item(collection, id)
 
     return redirect('database')
+
+
+class PRNUExtractionView(TemplateView):
+    '''Извлечение признака из записи'''
+
+    template_name = 'prnu/extracted.html'
+    extra_context = {}
+
+    def get(self, request, *args, **kwargs):
+        image_urls = database.retrieve_image_urls(kwargs['collection'], int(kwargs['id']))
+        images = []
+
+        for url in image_urls:
+            fingerprint = get_fingerprint_from_images([url])
+            images.append((url, fingerprint))
+
+        database.save_fingerprints(kwargs['collection'], int(kwargs['id']), images)
+
+        self.extra_context['images'] = images
+        self.extra_context['id'] = kwargs['id']
+
+        return super().get(request, *args, **kwargs)
